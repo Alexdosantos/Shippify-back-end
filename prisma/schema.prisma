@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model company {
+  id            Int       @id @default(autoincrement())
+  name          String?   @db.VarChar(100)
+  city_id       Int?
+  status        String?   @db.VarChar(20)
+  plan_type     String?   @db.VarChar(20)
+  creation_date DateTime? @default(now()) @db.Timestamp(0)
+
+  @@index([city_id], map: "company_city_id_index")
+  @@index([creation_date], map: "company_creation_date_index")
+  @@index([name], map: "company_name_index")
+}
+
+model driver {
+  id         Int       @id @default(autoincrement())
+  company_id Int?
+  city_id    Int?
+  first_name String?   @db.VarChar(100)
+  last_name  String?   @db.VarChar(100)
+  email      String?   @db.VarChar(100)
+  phone      String?   @db.VarChar(100)
+  avatar_url String?   @db.VarChar(100)
+  status     String?   @db.VarChar(20)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  vehicles   vehicle[]
+
+  @@index([city_id], map: "driver_city_id_index")
+  @@index([created_at], map: "driver_created_at_index")
+  @@index([email], map: "driver_email_index")
+  @@index([first_name], map: "driver_first_name_index")
+}
+
+model vehicle {
+  id            Int       @id @default(autoincrement())
+  driver_id     Int?
+  plate         String?   @db.VarChar(100)
+  model         String?   @db.VarChar(100)
+  type          String?   @db.VarChar(20)
+  capacity      String?   @db.VarChar(20)
+  creation_date DateTime? @default(now()) @db.Timestamp(0)
+  driver        driver?   @relation(fields: [driver_id], references: [id])
+
+  @@index([creation_date], map: "vehicle_creation_date_index")
+  @@index([driver_id], map: "vehicle_driver_id_index")
+  @@index([type], map: "vehicle_type_index")
+}
