@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { DriverRepository } from "./driver.repository";
 import { DriverService } from "./driver.service";
-import { DriverController } from "./driver.controlles";
+import { DriverController } from "./driver.controller";
 
 class DriverModule {
   static instance() {

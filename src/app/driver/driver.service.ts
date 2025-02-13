@@ -6,9 +6,14 @@ export class DriverService {
 
   async createDrive(data: DriverDto) {
     try {
+      const { email } = data;
+      const drive = await this.driveRepo.findUniqueByEmail(email);
+      if (drive) {
+        return { error: "Driver already exists", status: 400 };
+      }
       return this.driveRepo.create(data);
     } catch (error) {
-      return { error: "Erro ao criar motorista", status: 500 };
+      return { error: "Error when creating driver", status: 500 };
     }
   }
 
@@ -16,7 +21,7 @@ export class DriverService {
     try {
       return this.driveRepo.findAll();
     } catch (error) {
-      return { error: "Erro ao buscar motoristas", status: 500 };
+      return { error: "Error when searching for drivers", status: 500 };
     }
   }
 
@@ -24,11 +29,11 @@ export class DriverService {
     try {
       const drive = await this.driveRepo.findUnique(driverId);
       if (!drive) {
-        return { error: "Motorista não encontrado", status: 404 };
+        return { error: "Driver not found", status: 404 };
       }
       return drive;
     } catch (error) {
-      return { error: "Erro ao buscar motorista", status: 500 };
+      return { error: "Error when searching for driver", status: 500 };
     }
   }
 }

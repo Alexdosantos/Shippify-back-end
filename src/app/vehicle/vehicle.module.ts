@@ -9,8 +9,7 @@ class VehicleModule {
   static instance() {
     const prisma = new PrismaClient();
     const vehicleRepo = new VehicleRepository(prisma);
-    const driverRepo = new DriverRepository(prisma);
-    const vehicleService = new VehicleService(vehicleRepo, driverRepo);
+    const vehicleService = new VehicleService(vehicleRepo);
     const vehicleController = new VehicleController(vehicleService);
     return { vehicleController };
   }

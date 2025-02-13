@@ -8,7 +8,8 @@ export class CompanyRepository {
     try {
       return this.prisma.company.create({ data });
     } catch (error) {
-      return { error: "Erro ao criar empresa", status: 500 };
+      console.error("Error when creating company:", error);
+      return { error: "Error when creating company", status: 500 };
     }
   }
 
@@ -16,21 +17,23 @@ export class CompanyRepository {
     try {
       return this.prisma.company.findMany();
     } catch (error) {
-      console.error("Erro ao buscar empresas no banco:", error);
-      return { error: "Erro ao buscar empresas", status: 500 };
+      console.error("Error when searching for companies:", error);
+      return { error: "Error when searching for companies", status: 500 };
     }
   }
 
   async findUnique(id: number) {
     try {
-      return this.prisma.company.findUnique({ where: { id } });
+      const company = await this.prisma.company.findUnique({
+        where: { id },
+      });
+      if (!company) {
+        return { error: "Company not found", status: 404 };
+      }
+      return company;
     } catch (error) {
-      console.error("Erro ao buscar empresa:", error);
-      return { error: "Erro ao buscar empresa", status: 500 };
+      console.error("Error when searching for company:", error);
+      return { error: "Error when searching for company", status: 500 };
     }
   }
-
-  
-
-  
 }

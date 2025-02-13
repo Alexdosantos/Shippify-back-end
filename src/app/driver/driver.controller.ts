@@ -18,7 +18,7 @@ export class DriverController {
       const drives = await this.driveService.findAll();
       res.status(200).json(drives);
     } catch (error) {
-      res.status(500).json({ error: "Erro ao buscar motoristas", status: 500 });
+      res.status(500).json({ error: "Error when searching for motoristas", status: 500 });
     }
   }
 
@@ -28,9 +28,7 @@ export class DriverController {
       const drive = await this.driveService.findDriveById(+driverId);
       res.status(200).json(drive);
     } catch (error) {
-      res.status(500).json({ error: "Erro ao buscar motorista", status: 500 });
+      res.status(500).json({ error: "Error when searching for motorista", status: 500 });
     }
   }
-
-  
 }

@@ -22,16 +22,4 @@ export class VehicleController {
       res.status(500).json({ error: "Erro ao buscar veículos", status: 500 });
     }
   }
-
-  async getVehiclesByDriver(req: Request, res: Response): Promise<any> {
-    try {
-      const { driverId } = req.params;
-      const vehicles = await this.vehicleService.getVehiclesByDriver(+driverId);
-      return res.status(200).json(vehicles);
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ error: "Erro ao buscar veículos", status: 500 });
-    }
-  }
 }

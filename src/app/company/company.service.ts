@@ -9,15 +9,15 @@ export class CompanyService {
     try {
       return this.companyRepo.create(data);
     } catch (error) {
-      return { error: "Erro ao criar empresa", status: 500 };
+      return { error: "Error when creating company", status: 500 };
     }
   }
   async findAll() {
     try {
       return this.companyRepo.findAll();
     } catch (error) {
-      console.error("Erro ao buscar empresas no banco:", error);
-      return { error: "Erro ao buscar empresas", status: 500 };
+      console.error("Error when searching for companies:", error);
+      return { error: "Error when searching for companies", status: 500 };
     }
   }
   
